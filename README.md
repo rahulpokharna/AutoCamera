@@ -12,10 +12,10 @@ To install, run ` sudo apt-get install gphoto2`
 This will take care of the dependencies that are needed. 
 
 The program will be based in Python 3.4, as that is the version I am currently running.
-Some additional python packages needed are the Astral package, to take care of sunrise and sunset times. 
-This can be installed with ` sudo pip3 install astral`
+Some additional python packages are needed. The first one needed is the Astral package, to take care of sunrise and sunset times. 
+This can be installed with ` sudo pip3 install astral`. 
  The next package needed will be datetime, to take care of the format and retrieval of dates and times. 
- This can be installed with `sudo pip3 install datetime`
+ This can be installed with `sudo pip3 install datetime`.
  
 The rest of the program should run without additional packages. 
 
@@ -34,5 +34,4 @@ This would then take the photo, and store it in the location your terminal curre
 
 
 ### Major Files
-The main files in use will be imageManip.py, to interpret and modify images, currently just to aggregate the brightest pixel over all images passed to it.
- 
+The main files in use will be imageManip.py, pause.py, and automate.py. The first file is used to interpret and modify images, currently just to aggregate the brightest or drakest pixel over all images passed to it. The next file is just to hold the function until, which makes the program pause until a certain time. The final file does the automation to wait until sunrise, and then take a large series of images to capture the sunrise, starting from 30 minutes before to a few minutes after, to try to capture the best images.
