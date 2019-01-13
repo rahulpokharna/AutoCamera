@@ -1,2 +1,3 @@
 http://blog.davidsingleton.org/raspberry-pi-timelapse-controller/
 https://medium.com/@cgulabrani/controlling-your-dslr-through-raspberry-pi-ad4896f5e225
+https://www.raspberrypi.org/magpi/ssh-remote-control-raspberry-pi/

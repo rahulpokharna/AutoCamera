@@ -71,6 +71,35 @@ def imageComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.
         pass
 
 
+# Def color shift prototype to see the dealio
+def colorShift(file="pic1.jpg"):
+    # image shift add pixel
+    # iterate thru image and set value of pixel xyz to xyz+5 for r, and mins for b
+    # Function to get the image with the greatest variety/range of colors
+
+    try:
+        # Open images into program
+        img = Image.open(file)
+
+        # Get pixels from images
+        im = img.load()
+        width, height = img.size
+
+        for i in range(width):
+            for j in range(height):
+
+                # Convert the pixels into smaller gaps, so close colors are
+                # not double counted, to try to get a larger difference in color
+                r1, g1, b1 = (im1[i, j])
+
+
+    except IOError:
+        print("It broke")
+        pass
+
+
+
+
 # Function to get the image with the greatest variety/range of colors
 def colorComp(file1="pic1.JPG", file2="pic2.jpg", filename="output.jpg"):
     # Initialize the RGB list for large sizes of lists
