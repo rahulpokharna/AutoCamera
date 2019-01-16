@@ -5,7 +5,7 @@ def pixelComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.
     try:
         # Open images into program
         img1 = Image.open(file1)
-        img2 = Image.open(file2)
+        img2 = Image.open(file2) 
 
         # Get pixels from images
         im1 = img1.load()
@@ -72,26 +72,35 @@ def imageComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.
 
 
 # Def color shift prototype to see the dealio
-def colorShift(file="pic1.jpg"):
+def colorShift(filename="pic1.jpg"):
     # image shift add pixel
     # iterate thru image and set value of pixel xyz to xyz+5 for r, and mins for b
     # Function to get the image with the greatest variety/range of colors
 
     try:
         # Open images into program
-        img = Image.open(file)
+        img = Image.open(filename)
 
         # Get pixels from images
         im = img.load()
         width, height = img.size
+        # Initialize final image
+
+        finalImg = Image.new('RGB', (width, height))
+        finalPixels = finalImg.load()
 
         for i in range(width):
             for j in range(height):
 
                 # Convert the pixels into smaller gaps, so close colors are
                 # not double counted, to try to get a larger difference in color
-                r1, g1, b1 = (im1[i, j])
+                r, g, b = (im[i, j])
+                r2, g2, b2 = finalPixels[i,j]
+                finalPixels[i,j] = r2, b, g2
+                finalPixels[i,j+5] = r2, b2, g
+                finalPixels[i,j-5] = r, b2, g2
 
+        finalImg.save(filename)
 
     except IOError:
         print("It broke")
