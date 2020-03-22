@@ -1,4 +1,5 @@
 from PIL import Image
+import time
 
 # Function to compare and get the image with the brightest or darkest pixels out of the input values
 def pixelComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.JPG"):
@@ -72,25 +73,47 @@ def imageComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.
 
 
 # Def color shift prototype to see the dealio
-def colorShift(file="pic1.jpg"):
+def colorShift(file="pic1.jpg", shift=5):
     # image shift add pixel
     # iterate thru image and set value of pixel xyz to xyz+5 for r, and mins for b
     # Function to get the image with the greatest variety/range of colors
 
     try:
         # Open images into program
-        img = Image.open(file)
+        img = Image.open("Image\\" + file)
 
         # Get pixels from images
         im = img.load()
         width, height = img.size
+        print("Height: ", height, "\nWidth: ", width)
+
+        # Output image
+        finalImg = Image.new('RGB', (width, height))
+        finalPixels = finalImg.load()
 
         for i in range(width):
             for j in range(height):
 
                 # Convert the pixels into smaller gaps, so close colors are
                 # not double counted, to try to get a larger difference in color
-                r1, g1, b1 = (im1[i, j])
+                # r1, g1, b1 = (im[i, j])
+                
+                r, g, b = (im[i, j])
+                r2, g2, b2 = finalPixels[i, j]
+                
+                # Shift along the width
+                iShiftPlus = min((i+shift) % width, i+shift)
+                iShiftMinus = max((i-shift) % width, i-shift)
+
+                # This is done incorrectly, we need to access the old data from each new place we place it, the current data in the final image and all other data
+                # So we don't override it, but this effect is cool. 
+                # Assign New Photo image
+                finalPixels[i, j] = r2, b, g2
+                finalPixels[iShiftPlus, j] = r2, b2, g
+                finalPixels[iShiftMinus, j] = r, b2, g2
+        
+        finalImg.save("Output\\JaLEN\\output_" + str(shift) + file)
+        # finalImg.save("output.jpg")
 
 
     except IOError:
@@ -164,4 +187,13 @@ def calcLum(color):
 
 if __name__ == '__main__':
     #pixelComp(file1="img1.JPG", file2="img2.JPG", bright=False, filename="darkest.JPG")
-    colorComp(file1="img1.JPG", file2="img2.JPG", filename="darkest.JPG")
+    # colorComp(file1="img1.JPG", file2="img2.JPG", filename="darkest.JPG")
+    start_time = time.time()
+
+    for i in range(0,11):
+        
+        run_time = time.time()
+        colorShift("DSC_0063.jpg", shift=i*5)
+        print("Run length with " + str(i) + " shift: ", time.time() - run_time)
+
+    print("Total Time Elapsed: ", time.time() - start_time)
