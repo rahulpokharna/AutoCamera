@@ -6,7 +6,7 @@ def pixelComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.
     try:
         # Open images into program
         img1 = Image.open(file1)
-        img2 = Image.open(file2)
+        img2 = Image.open(file2) 
 
         # Get pixels from images
         im1 = img1.load()
@@ -115,6 +115,7 @@ def colorShift(file="pic1.jpg", shift=5):
         finalImg.save("Output\\JaLEN\\output_" + str(shift) + file)
         # finalImg.save("output.jpg")
 
+        finalImg.save(filename)
 
     except IOError:
         print("It broke")
