@@ -1,7 +1,5 @@
 from PIL import Image
-import os
-import os
-scriptDir = os.path.dirname(__file__)
+import time
 
 loadpath = '/images/'
 savepath = '/output/'
@@ -77,7 +75,7 @@ def imageComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.
 
 
 # Def color shift prototype to see the dealio
-def colorShift(filename="pic1.jpg"):
+def colorShift(file="pic1.jpg", shift=5):
     # image shift add pixel
     # iterate thru image and set value of pixel xyz to xyz+5 for r, and mins for b
     # Function to get the image with the greatest variety/range of colors
@@ -85,7 +83,7 @@ def colorShift(filename="pic1.jpg"):
     # Maybe use numpy for the image manipulations instead? Might be moer efficient for the shifting, much faster as well
     try:
         # Open images into program
-        print("Loading image")
+        img = Image.open("Image\\" + file)
 
         # Fix loading from a folder, right now stored in base directory, same as this program
         # impath = os.path.join(scriptDir, loadpath + filename)
@@ -94,15 +92,9 @@ def colorShift(filename="pic1.jpg"):
         # Get pixels from images
         im = img.load()
         width, height = img.size
-        print(im.size)
-        print("Original Size/shape")
-        # Initialize final image
+        print("Height: ", height, "\nWidth: ", width)
 
-        # Define the buffer/storage for the pixels
-        # Make it absed n a parameter, and have the number of sublists be defined by shift_num, then
-        # each time you store a number, at the end of the height loop, do that incrementer i.e. k
-        # k = k % shift_num
-
+        # Output image
         finalImg = Image.new('RGB', (width, height))
         finalPixels = finalImg.load()
         print(type(im))
@@ -113,22 +105,28 @@ def colorShift(filename="pic1.jpg"):
                 # values[k][j], _, _= im[i,j]
                 # Then store the final pixels as however
 
-                # I PROBABLY AM SHIFTING THE SAME PIXEL ACROSS MAKING IT YELLOW
-                # Swap this, its vertically shifted (IT WORKS, but ITS ALL YELLOW??)
+                # Convert the pixels into smaller gaps, so close colors are
+                # not double counted, to try to get a larger difference in color
+                # r1, g1, b1 = (im[i, j])
+                
                 r, g, b = (im[i, j])
-                r2, _, b2 = finalPixels[i,j]
-                r3, g3, _ = finalPixels[i,(j+5)%height]
-                _, g4, b4 = finalPixels[i,j-5]
+                r2, g2, b2 = finalPixels[i, j]
+                
+                # Shift along the width
+                iShiftPlus = min((i+shift) % width, i+shift)
+                iShiftMinus = max((i-shift) % width, i-shift)
 
-                # Update the values since they are tuples store new tuples
-                # Somehow everything became green? I must not be saving the old values properly, check and make sure
-                # Sure a smaller image next time, simpler colors
-                finalPixels[i,j] = (r2, b2, g)
-                finalPixels[i,(j+5)%height] = (r3, b, g3)
-                finalPixels[i,j-5] = (r, b4, g4)
+                # This is done incorrectly, we need to access the old data from each new place we place it, the current data in the final image and all other data
+                # So we don't override it, but this effect is cool. 
+                # Assign New Photo image
+                finalPixels[i, j] = r2, b, g2
+                finalPixels[iShiftPlus, j] = r2, b2, g
+                finalPixels[iShiftMinus, j] = r, b2, g2
         
-        finalImg.save("out.jpg")
-        print("Image done processing")
+        finalImg.save("Output\\JaLEN\\output_" + str(shift) + file)
+        # finalImg.save("output.jpg")
+
+        finalImg.save(filename)
 
     except IOError:
         print("It broke")
@@ -202,4 +200,12 @@ def calcLum(color):
 if __name__ == '__main__':
     #pixelComp(file1="img1.JPG", file2="img2.JPG", bright=False, filename="darkest.JPG")
     # colorComp(file1="img1.JPG", file2="img2.JPG", filename="darkest.JPG")
-    colorShift()
+    start_time = time.time()
+
+    for i in range(0,11):
+        
+        run_time = time.time()
+        colorShift("DSC_0063.jpg", shift=i*5)
+        print("Run length with " + str(i) + " shift: ", time.time() - run_time)
+
+    print("Total Time Elapsed: ", time.time() - start_time)
