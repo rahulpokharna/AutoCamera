@@ -115,7 +115,6 @@ def colorShift(file="pic1.jpg", shift=5):
         finalImg.save("Output\\JaLEN\\output_" + str(shift) + file)
         # finalImg.save("output.jpg")
 
-        finalImg.save(filename)
 
     except IOError:
         print("It broke")
