@@ -1,6 +1,8 @@
 from PIL import Image
 import time
 
+loadpath = '/images/'
+savepath = '/output/'
 # Function to compare and get the image with the brightest or darkest pixels out of the input values
 def pixelComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.JPG"):
     try:
@@ -78,10 +80,15 @@ def colorShift(file="pic1.jpg", shift=5):
     # iterate thru image and set value of pixel xyz to xyz+5 for r, and mins for b
     # Function to get the image with the greatest variety/range of colors
 
+    # Maybe use numpy for the image manipulations instead? Might be moer efficient for the shifting, much faster as well
     try:
         # Open images into program
         img = Image.open("Image\\" + file)
 
+        # Fix loading from a folder, right now stored in base directory, same as this program
+        # impath = os.path.join(scriptDir, loadpath + filename)
+        img = Image.open(filename)
+        print("Loaded image")
         # Get pixels from images
         im = img.load()
         width, height = img.size
@@ -90,9 +97,13 @@ def colorShift(file="pic1.jpg", shift=5):
         # Output image
         finalImg = Image.new('RGB', (width, height))
         finalPixels = finalImg.load()
-
+        print(type(im))
         for i in range(width):
+            # Increment K here, or after the below loop
             for j in range(height):
+                # Store the R values here, as 
+                # values[k][j], _, _= im[i,j]
+                # Then store the final pixels as however
 
                 # Convert the pixels into smaller gaps, so close colors are
                 # not double counted, to try to get a larger difference in color
