@@ -85,9 +85,7 @@ def colorShift(file="pic1.jpg", shift=5):
         # Open images into program
         img = Image.open("Image\\" + file)
 
-        # Fix loading from a folder, right now stored in base directory, same as this program
-        # impath = os.path.join(scriptDir, loadpath + filename)
-        img = Image.open(filename)
+
         print("Loaded image")
         # Get pixels from images
         im = img.load()
@@ -123,7 +121,7 @@ def colorShift(file="pic1.jpg", shift=5):
                 finalPixels[iShiftPlus, j] = r2, b2, g
                 finalPixels[iShiftMinus, j] = r, b2, g2
         
-        finalImg.save("Output\\JaLEN\\output_" + str(shift) + file)
+        finalImg.save("Output\\output_" + str(shift) + file)
         # finalImg.save("output.jpg")
 
 
