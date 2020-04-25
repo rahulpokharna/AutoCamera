@@ -1,9 +1,24 @@
 from PIL import Image
 import time
 
+
+# Timer decorator
+def timeit(f):
+    def helper(*args, **kwargs):
+        start = time.time()
+        to_return = f(*args, **kwargs)
+        print('{} seconds'.format(time.time() - start))
+        return to_return
+
+    return helper
+
+
+
 loadpath = '/images/'
 savepath = '/output/'
+
 # Function to compare and get the image with the brightest or darkest pixels out of the input values
+@timeit
 def pixelComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.JPG"):
     try:
         # Open images into program
@@ -35,10 +50,10 @@ def pixelComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.
                 else:
                     finalPixels[i, j] = im2[i, j]
         finalImg.save(filename)  # show()
-        print("completed")
+        print("completed: ", filename)
     except IOError:
         print("It broke")
-        pass
+        raise(IOError)
 
 # Function to compare and get the brightest or darkest image of the two
 def imageComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.JPG"):
@@ -75,6 +90,7 @@ def imageComp(file1="pic1.JPG", file2="pic2.JPG", bright=True, filename="output.
 
 
 # Def color shift prototype to see the dealio
+@timeit
 def colorShift(file="pic1.jpg", shift=5):
     # image shift add pixel
     # iterate thru image and set value of pixel xyz to xyz+5 for r, and mins for b
@@ -128,8 +144,6 @@ def colorShift(file="pic1.jpg", shift=5):
     except IOError:
         print("It broke")
         pass
-
-
 
 
 # Function to get the image with the greatest variety/range of colors
@@ -194,15 +208,41 @@ def calcLum(color):
     return ((red * 0.2126 + green * 0.7152 + blue * 0.0722) / 255)
 
 
+
 if __name__ == '__main__':
-    #pixelComp(file1="img1.JPG", file2="img2.JPG", bright=False, filename="darkest.JPG")
+    # pixelComp(file1="Image\\brightest\\DSC_0454.JPG",
+    #           file2="Image\\brightest\\DSC_0455.JPG", bright=False, filename="darkest1.JPG")
+
+    # pixelComp(file1="Image\\brightest\\DSC_0456.JPG",
+    #           file2="Image\\brightest\\DSC_0457.JPG", bright=False, filename="darkest2.JPG")
+
+    # pixelComp(file1="Image\\brightest\\DSC_0458.JPG",
+    #           file2="Image\\brightest\\DSC_0459.JPG", bright=False, filename="darkest3.JPG")
+
+    # pixelComp(file1="Image\\brightest\\DSC_0460.JPG",
+    #           file2="Image\\brightest\\DSC_0461.JPG", bright=False, filename="darkest4.JPG")
+
+    # pixelComp(file1="darkest1.JPG",
+    #           file2="darkest2.JPG", bright=False, filename="darkest5.JPG")
+
+    # pixelComp(file1="darkest4.JPG",
+    #           file2="darkest3.JPG", bright=False, filename="darkest6.JPG")
+
+    pixelComp(file1="darkest5.JPG",
+              file2="darkest3.JPG", bright=False, filename="darkest7.JPG")
+
+
+    # pixelComp(file1="darkest5.JPG",
+    #           file2="darkest6.JPG", bright=False, filename="darkest_final.JPG")
+
     # colorComp(file1="img1.JPG", file2="img2.JPG", filename="darkest.JPG")
-    start_time = time.time()
+    # start_time = time.time()
 
-    for i in range(0,11):
+    # for i in range(0,11):
         
-        run_time = time.time()
-        colorShift("DSC_0063.jpg", shift=i*5)
-        print("Run length with " + str(i) + " shift: ", time.time() - run_time)
+    #     run_time = time.time()
+    # colorShift("DSC_0063.jpg", shift=25)
+    #     print("Run length with " + str(i) + " shift: ", time.time() - run_time)
 
-    print("Total Time Elapsed: ", time.time() - start_time)
+    # print("Total Time Elapsed: ", time.time() - start_time)
+
