@@ -228,21 +228,21 @@ if __name__ == '__main__':
     # pixelComp(file1="darkest4.JPG",
     #           file2="darkest3.JPG", bright=False, filename="darkest6.JPG")
 
-    pixelComp(file1="darkest5.JPG",
-              file2="darkest3.JPG", bright=False, filename="darkest7.JPG")
+    # pixelComp(file1="darkest5.JPG",
+    #           file2="darkest3.JPG", bright=False, filename="darkest7.JPG")
 
 
     # pixelComp(file1="darkest5.JPG",
     #           file2="darkest6.JPG", bright=False, filename="darkest_final.JPG")
 
     # colorComp(file1="img1.JPG", file2="img2.JPG", filename="darkest.JPG")
-    # start_time = time.time()
+    start_time = time.time()
 
-    # for i in range(0,11):
+    for i in range(0,11):
         
-    #     run_time = time.time()
-    # colorShift("DSC_0063.jpg", shift=25)
-    #     print("Run length with " + str(i) + " shift: ", time.time() - run_time)
+        # run_time = time.time()
+        colorShift("DSC_0063.jpg", shift=25*i)
+        # print("Run length with " + str(i) + " shift: ", time.time() - run_time)
 
-    # print("Total Time Elapsed: ", time.time() - start_time)
+    print("Total Time Elapsed: ", time.time() - start_time)
 
